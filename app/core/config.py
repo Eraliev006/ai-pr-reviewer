@@ -3,7 +3,7 @@ from typing import Literal
 
 class Config(BaseSettings):
     PROJECT_NAME: str = "AI PR Reviewer"
-    API_V1_STR: str = "/api/v1"
+    API_V1_STR: str = "/api"
 
     ENVIRONMENT: Literal["dev", "prod"] = "dev"
 
