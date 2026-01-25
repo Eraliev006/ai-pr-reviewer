@@ -1,0 +1,26 @@
+name: "ai-pr-reviewer"
+
+services:
+    db:
+        image: postgres:15-alpine
+        env_file:
+            - ../.env.local
+        ports:
+            - 5432:5432
+        volumes:
+            - postgres_data:/var/lib/postgresql/data
+    app:
+      build:
+        context: ../
+        dockerfile: Dockerfile.local
+      env_file:
+        - ../.env.local
+      ports:
+        - 8000:8000
+      volumes:
+        - ../app:/app
+
+
+volumes:
+    postgres_data: 
+        driver: local
