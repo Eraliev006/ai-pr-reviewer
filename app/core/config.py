@@ -1,5 +1,8 @@
+from pathlib import Path
 from pydantic_settings import BaseSettings, SettingsConfigDict
 from typing import Literal
+
+BASE_PATH = Path(__file__).resolve().parent.parent.parent
 
 class Config(BaseSettings):
     PROJECT_NAME: str = "AI PR Reviewer"
@@ -18,7 +21,7 @@ class Config(BaseSettings):
     REDIS_PASSWORD: str
 
     model_config = SettingsConfigDict(
-        env_file=".env.local",
+        env_file=BASE_PATH / ".env.local",
         env_file_encoding="utf-8",
         env_ignore_empty=True,
         extra="ignore",
