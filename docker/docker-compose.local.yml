@@ -9,22 +9,22 @@ services:
             - 5432:5432
         volumes:
             - postgres_data:/var/lib/postgresql/data
+        networks:
+          - ai_pr_reviewer_network
     app:
       build:
         context: ../
         dockerfile: Dockerfile.local
       env_file:
         - ../.env.local
-      command: uv run uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+      command: ["uv", "run", "uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
       ports:
-        - 8000:8000
-      volumes:
-        - ../:/app         
-        - /app/.venv
+        - 8000:8000     
       depends_on:
         - db
         - redis
-
+      networks:
+        - ai_pr_reviewer_network
     redis:
         image: redis:7-alpine
         env_file:
@@ -33,10 +33,14 @@ services:
             - 6379:6379
         volumes:
             - redis_data:/data
+        networks:
+          - ai_pr_reviewer_network
 
 
 volumes:
     postgres_data: 
-        driver: local
     redis_data:
-        driver: local
+
+networks:
+  ai_pr_reviewer_network:
+    driver: bridge
