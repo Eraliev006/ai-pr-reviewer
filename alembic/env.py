@@ -6,7 +6,7 @@ from sqlalchemy.engine import Connection
 from sqlalchemy.ext.asyncio import async_engine_from_config
 
 from alembic import context
-from app.core.db import BaseModel
+from app.models import Base
 from app.core import config as _config
 
 # this is the Alembic Config object, which provides
@@ -22,14 +22,12 @@ if config.config_file_name is not None:
 # for 'autogenerate' support
 # from myapp import mymodel
 # target_metadata = mymodel.Base.metadata
-target_metadata = BaseModel.metadata
+target_metadata = Base.metadata
 
 # other values from the config, defined by the needs of env.py,
 # can be acquired:
 # my_important_option = config.get_main_option("my_important_option")
 # ... etc.
-
-print("DATABASE_URL", _config.DATABASE_URL)
 
 config.set_main_option("sqlalchemy.url", _config.DATABASE_URL)
 

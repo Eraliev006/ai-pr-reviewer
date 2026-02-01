@@ -1,13 +1,13 @@
 from sqlalchemy import func
 from sqlalchemy.orm import Mapped, mapped_column
 from sqlalchemy.types import String
-from app.core.db import BaseModel
+from app.models import Base
 from app.models import UUIDMixin
 from sqlalchemy.dialects.postgresql import JSONB
 from datetime import datetime
 from sqlalchemy.types import DateTime
 
-class WebhookEvent(BaseModel, UUIDMixin):
+class WebhookEvent(Base, UUIDMixin):
     __tablename__ = "webhook_events"
 
     provider: Mapped[str] = mapped_column(String(255), nullable=False)
